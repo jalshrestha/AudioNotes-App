@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Audio Notes App
+
+## Overview
+
+The Audio Notes App is a web application designed for users to easily record audio notes and transcribe them into text. Built with Next.js and TypeScript, this application leverages the Web Speech API for real-time speech recognition and Supabase for data storage.
+
+## Features
+
+- **Audio Recording**: Users can record their voice notes directly from the browser.
+- **Real-time Transcription**: As users speak, their words are transcribed into text in real-time.
+- **Save Notes**: Users can save their transcribed notes to a database for later retrieval.
+- **User-friendly Interface**: The application features a clean and intuitive UI for easy navigation and use.
+
+## Technologies Used
+
+- **Next.js**: A React framework for building server-side rendered applications.
+- **TypeScript**: A superset of JavaScript that adds static types, enhancing code quality and maintainability.
+- **Web Speech API**: A browser API that enables speech recognition and synthesis.
+- **Supabase**: An open-source Firebase alternative that provides a backend as a service, including database storage.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (version 14 or higher)
+- npm (Node package manager)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   ```bash
+   git clone git@github.com:jalshrestha/AudioNotes-App.git
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Navigate to the project directory:
+   ```bash
+   cd AudioNotes-App
+   ```
 
-## Learn More
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Set up your Supabase project and create a table for storing notes. Update the Supabase configuration in `src/utils/supabase.ts` with your project URL and anon key.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+6. Open your browser and navigate to `http://localhost:3000` to use the application.
 
-## Deploy on Vercel
+## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Click the "Start Recording" button to begin recording your voice.
+- Speak clearly, and your words will appear in the text area in real-time.
+- Click the "Stop Listening" button to stop recording.
+- Once you're satisfied with your notes, click the "Save Note" button to store them in the database.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing
+
+Contributions are welcome! If you have suggestions for improvements or new features, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
