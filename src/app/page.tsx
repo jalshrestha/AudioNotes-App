@@ -13,15 +13,17 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-full">
       <div className="container mx-auto py-8 px-4">
-        <h1 className="text-4xl font-bold mb-8 text-center text-yellow-400">Audio Notes App</h1>
-        <p className="text-center text-gray-300 mb-8">Speak your thoughts, save your ideas</p>
+        <h1 className="text-4xl font-bold mb-4 text-center text-yellow-400">Audio Notes App</h1>
+        <p className="text-center mb-8">Speak your thoughts, save your ideas</p>
         
-        <div className="max-w-2xl mx-auto space-y-8">
-          <NoteCreator onNoteCreated={handleNoteCreated} />
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
+            <NoteCreator onNoteCreated={handleNoteCreated} />
+          </div>
           
-          <div key={refreshTrigger}>
+          <div key={refreshTrigger} className="mb-8">
             <NotesList />
           </div>
         </div>
