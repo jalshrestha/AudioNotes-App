@@ -45,9 +45,6 @@ export default function Header({ onThemeToggle, isDarkMode }: HeaderProps) {
           )}
         </button>
 
-        {/* App Title - Center */}
-        <h1 className="text-xl font-semibold">Audio Notes</h1>
-        
         {/* Login/Logout Button - Right side */}
         {user ? (
           <div className="flex items-center gap-2">

@@ -4,15 +4,38 @@ import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { saveNote } from '../utils/api';
 import AudioRecorder from './AudioRecorder';
 import { useAuth } from './Auth/AuthContext';
-import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorBoundary from './ErrorBoundary';
 
 export default function NoteCreator({ onNoteCreated }: { onNoteCreated: () => void }) {
   const [content, setContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const audioRecorderKey = useRef(1);
   const { user } = useAuth();
   const accumulatedTextRef = useRef('');
+
+  useEffect(() => {
+    // Check if dark mode is enabled
+    const isDark = document.documentElement.classList.contains('dark');
+    setIsDarkMode(isDark);
+
+    // Listen for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDarkMode(document.documentElement.classList.contains('dark'));
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   // This handler is safe because it uses a ref for accumulation
   const handleTranscriptionComplete = (text: string) => {
@@ -124,7 +147,7 @@ export default function NoteCreator({ onNoteCreated }: { onNoteCreated: () => vo
   if (!user) {
     return (
       <div className="p-6 rounded-lg border card" style={{ borderColor: 'var(--card-border)' }}>
-        <h2 className="text-xl font-medium mb-4">Voice Notes</h2>
+        <h2 className="text-xl font-bold mb-4">Voice Notes</h2>
         <p className="mb-4">Please log in to create notes</p>
         <button
           onClick={() => document.getElementById('login-button')?.click()}
@@ -143,7 +166,7 @@ export default function NoteCreator({ onNoteCreated }: { onNoteCreated: () => vo
         Something went wrong with the note creator. Please refresh the page.
       </div>}>
         <div className="p-6 rounded-lg border card" style={{ borderColor: 'var(--card-border)' }}>
-          <h2 className="text-xl font-medium mb-4">Voice Notes</h2>
+          <h2 className="text-xl font-bold mb-4">Voice Notes</h2>
           
           {error && (
             <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-md text-red-500">
@@ -177,15 +200,11 @@ export default function NoteCreator({ onNoteCreated }: { onNoteCreated: () => vo
             <button
               onClick={handleSaveNote}
               disabled={!content.trim() || isSubmitting}
-              className={`px-4 py-2 rounded-lg flex items-center focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
-                !content.trim() || isSubmitting
-                  ? 'opacity-50 cursor-not-allowed'
-                  : 'hover:opacity-90'
-              }`}
-              style={{ 
-                backgroundColor: !content.trim() || isSubmitting ? 'var(--button-bg)' : '#4a69bd',
-                color: 'white'
-              }}
+              className={`px-4 py-2 rounded-lg flex items-center focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white
+                ${!content.trim() || isSubmitting
+                  ? 'opacity-50 cursor-not-allowed bg-gray-500'
+                  : 'hover:opacity-90 dark:bg-[#4a69bd] bg-black'
+                }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6a1 1 0 10-2 0v5.586l-1.293-1.293z" />
